@@ -1,9 +1,12 @@
 package com.codandosimples.domain;
 
+import org.springframework.data.annotation.Id;
+
 import java.time.LocalDate;
 
 public class Expense {
 
+	@Id
 	private Long id;
 	private String description;
 	private LocalDate date;
