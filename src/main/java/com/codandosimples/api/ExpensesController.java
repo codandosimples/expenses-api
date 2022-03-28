@@ -3,9 +3,7 @@ package com.codandosimples.api;
 import com.codandosimples.domain.Expense;
 import com.codandosimples.repository.ExpenseRepository;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -31,5 +29,10 @@ public class ExpensesController {
 	public Expense findById(@PathVariable("id") Long id) {
 		return expenseRepository.findById(id)
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+	}
+
+	@PostMapping("/expenses")
+	public Expense save(@RequestBody Expense expense) {
+		return expenseRepository.save(expense);
 	}
 }
