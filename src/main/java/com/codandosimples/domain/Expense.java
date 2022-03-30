@@ -2,15 +2,20 @@ package com.codandosimples.domain;
 
 import org.springframework.data.annotation.Id;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public class Expense {
 
 	@Id
 	private Long id;
+	@NotEmpty
 	private String description;
+	@NotNull
 	private LocalDate date;
 	private double value;
+	@NotNull
 	private Category category;
 
 	public Long getId() {
