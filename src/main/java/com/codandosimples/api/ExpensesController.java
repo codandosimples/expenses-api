@@ -36,4 +36,12 @@ public class ExpensesController {
 	public Expense save(@Valid @RequestBody Expense expense) {
 		return expenseRepository.save(expense);
 	}
+
+	@PutMapping("/expenses/{id}")
+	public Expense update(@Valid @RequestBody Expense expense, @PathVariable("id") Long id) {
+		findById(id);
+		expense.setId(id);
+
+		return expenseRepository.save(expense);
+	}
 }
