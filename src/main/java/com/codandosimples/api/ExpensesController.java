@@ -1,12 +1,14 @@
 package com.codandosimples.api;
 
 import com.codandosimples.domain.Expense;
+import com.codandosimples.helper.NullAwareBeanUtilsBean;
 import com.codandosimples.repository.ExpenseRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -15,9 +17,11 @@ import java.util.stream.StreamSupport;
 public class ExpensesController {
 
 	private ExpenseRepository expenseRepository;
+	private NullAwareBeanUtilsBean beanUtilsBean;
 
-	public ExpensesController(ExpenseRepository expenseRepository) {
+	public ExpensesController(ExpenseRepository expenseRepository, NullAwareBeanUtilsBean beanUtilsBean) {
 		this.expenseRepository = expenseRepository;
+		this.beanUtilsBean = beanUtilsBean;
 	}
 
 	@GetMapping("/expenses")
@@ -43,5 +47,14 @@ public class ExpensesController {
 		expense.setId(id);
 
 		return expenseRepository.save(expense);
+	}
+
+	@PatchMapping("/expenses/{id}")
+	public Expense patchUpdate(@RequestBody Expense expense, @PathVariable("id") Long id) throws InvocationTargetException, IllegalAccessException {
+		Expense existingExpense = findById(id);
+
+		beanUtilsBean.copyProperties(existingExpense, expense);
+
+		return expenseRepository.save(existingExpense);
 	}
 }
