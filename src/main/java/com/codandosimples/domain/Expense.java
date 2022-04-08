@@ -14,7 +14,7 @@ public class Expense {
 	private String description;
 	@NotNull
 	private LocalDate date;
-	private double value;
+	private Double value;
 	@NotNull
 	private Category category;
 
@@ -42,11 +42,11 @@ public class Expense {
 		this.date = date;
 	}
 
-	public double getValue() {
+	public Double getValue() {
 		return value;
 	}
 
-	public void setValue(double value) {
+	public void setValue(Double value) {
 		this.value = value;
 	}
 
