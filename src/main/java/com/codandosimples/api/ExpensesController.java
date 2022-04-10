@@ -57,4 +57,11 @@ public class ExpensesController {
 
 		return expenseRepository.save(existingExpense);
 	}
+
+	@DeleteMapping("/expenses/{id}")
+	public void delete(@PathVariable("id") Long id) {
+		findById(id);
+
+		expenseRepository.deleteById(id);
+	}
 }
